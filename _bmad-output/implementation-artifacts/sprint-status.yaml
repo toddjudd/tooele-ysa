@@ -63,9 +63,9 @@ development_status:
   epic-2-retrospective: optional
 
   # Epic 3: About Us Page
-  epic-3: in-progress
-  3-1-leadership-directory-and-leader-cards: in-progress
-  3-2-missionaries-section-and-page-assembly: ready-for-dev
+  epic-3: done
+  3-1-leadership-directory-and-leader-cards: done
+  3-2-missionaries-section-and-page-assembly: done
   epic-3-retrospective: optional
 
   # Epic 4: Let's Connect Page

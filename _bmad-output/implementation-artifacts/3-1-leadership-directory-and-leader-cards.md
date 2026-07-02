@@ -4,7 +4,7 @@ baseline_commit: a1a4e8d2175169875046c31558e044578a576f5f
 
 # Story 3.1: Leadership Directory & Leader Cards
 
-Status: in-progress
+Status: done
 
 ## Story
 
@@ -38,36 +38,40 @@ so that I can quickly call or email the bishop or another leader without asking 
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create the About Us page route (AC: #1, #9, #10, #11)
-  - [ ] Create `app/(site)/about/page.tsx` with ISR `export const revalidate = 60`
-  - [ ] Page `<title>` is "About Us — Tooele YSA Ward"
-  - [ ] Semantic heading order: one `<h1>` for page, `<h2>` for Leadership section
-  - [ ] Fetch `leaderCardsQuery` in RSC with try/catch returning `[]` on error
-  - [ ] Ward identity paragraph at top of page (placeholder text for launch)
-  - [ ] Follow eyebrow ("ABOUT US") → headline → body rhythm
+- [x] Task 1: Create the About Us page route (AC: #1, #9, #10, #11)
+  - [x] Create `app/(site)/about/page.tsx` with ISR `export const revalidate = 60`
+  - [x] Page `<title>` is "About Us — Tooele YSA Ward"
+  - [x] Semantic heading order: one `<h1>` for page, `<h2>` for Leadership section
+  - [x] Fetch `leaderCardsQuery` in RSC with try/catch returning `[]` on error
+  - [x] Ward identity paragraph at top of page (placeholder text for launch)
+  - [x] Follow eyebrow ("ABOUT US") → headline → body rhythm
 
-- [ ] Task 2: Create the LeaderCard component (AC: #2, #3, #4, #6, #7, #8)
-  - [ ] Create `components/leader-card.tsx` as a PascalCase export
-  - [ ] Props: `name: string`, `title: string`, `phone?: string`, `email?: string`
-  - [ ] Name in section-label style (`font-size: 12px`, `font-weight: 700`, `letter-spacing: 0.14em`, `text-transform: uppercase`) with primary color (`#092f33`)
-  - [ ] Title in body-sm style (`font-size: 14px`, `font-weight: 400`) with muted color (`#5a5550`)
-  - [ ] Phone as `<a href="tel:...">` in accent-rust (`#af5031`) with `aria-label="Call [Name]: [number]"`
-  - [ ] Email as `<a href="mailto:...">` in accent-rust with `aria-label="Email [Name]"`
-  - [ ] Full-line tap target on phone/email links — use `block` or `flex` with min-height 44px
-  - [ ] Hover: transition color from accent-rust to accent-teal (`#7fc7cc`)
-  - [ ] Card: surface background (`#FAFAF8`), `border: 1px solid #d6cfc6`, `padding: 24px`, zero border-radius
-  - [ ] Omit absent optional fields — no gap, no placeholder
+- [x] Task 2: Create the LeaderCard component (AC: #2, #3, #4, #6, #7, #8)
+  - [x] Create `components/leader-card.tsx` as a PascalCase export
+  - [x] Props: `name: string`, `title: string`, `phone?: string`, `email?: string`
+  - [x] Name in section-label style (`font-size: 12px`, `font-weight: 700`, `letter-spacing: 0.14em`, `text-transform: uppercase`) with primary color (`#092f33`)
+  - [x] Title in body-sm style (`font-size: 14px`, `font-weight: 400`) with muted color (`#5a5550`)
+  - [x] Phone as `<a href="tel:...">` in accent-rust (`#af5031`) with `aria-label="Call [Name]: [number]"`
+  - [x] Email as `<a href="mailto:...">` in accent-rust with `aria-label="Email [Name]"`
+  - [x] Full-line tap target on phone/email links — use `block` or `flex` with min-height 44px
+  - [x] Hover: transition color from accent-rust to accent-teal (`#7fc7cc`)
+  - [x] Card: surface background (`#FAFAF8`), `border: 1px solid #d6cfc6`, `padding: 24px`, zero border-radius
+  - [x] Omit absent optional fields — no gap, no placeholder
 
-- [ ] Task 3: Create the leadership directory grid (AC: #1, #5)
-  - [ ] In the About page, render leader cards in a responsive CSS grid
-  - [ ] Grid: `grid-cols-1` default, `sm:grid-cols-2` (640px+), `lg:grid-cols-3` (1024px+)
-  - [ ] Gap between cards: `stack-md` (24px)
-  - [ ] Empty state: "Leadership information will be added soon." in body style / on-surface-muted
+- [x] Task 3: Create the leadership directory grid (AC: #1, #5)
+  - [x] In the About page, render leader cards in a responsive CSS grid
+  - [x] Grid: `grid-cols-1` default, `sm:grid-cols-2` (640px+), `lg:grid-cols-3` (1024px+)
+  - [x] Gap between cards: `stack-md` (24px)
+  - [x] Empty state: "Leadership information will be added soon." in body style / on-surface-muted
 
-- [ ] Task 4: Add `leaderCardsQuery` to `lib/sanity/queries.ts` (AC: #9)
-  - [ ] Named export: `export const leaderCardsQuery = ...`
-  - [ ] Query fetches all `leaderCard` documents, ordered by `displayOrder asc`
-  - [ ] Fields: `_id`, `name`, `title`, `phone`, `email`, `displayOrder`
+- [x] Task 4: Add `leaderCardsQuery` to `lib/sanity/queries.ts` (AC: #9)
+  - [x] Named export: `export const leaderCardsQuery = ...`
+  - [x] Query fetches all `leaderCard` documents, ordered by `displayOrder asc`
+  - [x] Fields: `_id`, `name`, `title`, `phone`, `email`, `displayOrder`
+
+### Review Findings
+
+- [x] [Review][Patch] Normalize phone numbers in `tel:` hrefs [components/leader-card.tsx:17] — fixed by stripping non-dial characters from the link target while preserving the displayed phone number and aria label.
 
 ## Dev Notes
 
@@ -173,8 +177,31 @@ All styling must use Tailwind v4 utility classes referencing the @theme tokens i
 
 ### Agent Model Used
 
+github-copilot/gpt-5.5
+
 ### Debug Log References
+
+- `pnpm test -- tests/leadership-directory.test.mjs` — 3 passed
+- `pnpm test` — 23 passed
+- `pnpm lint` — passed with 1 unrelated warning in `.agents/skills/create-agent-with-sanity-context/references/ecommerce/app/src/app/api/chat/route.ts`
+- `pnpm build` — passed
 
 ### Completion Notes List
 
+- Implemented the `/about` page as an ISR server component with metadata, section-band layout, Sanity environment guard, `leaderCardsQuery` fetch, and try/catch fallback to `[]`.
+- Added `LeaderCard` with token-based flat card styling, optional phone/email rendering, accessible `tel:` and `mailto:` links, 44px tap targets, and rust-to-teal hover transitions.
+- Rendered the leadership directory grid with 1/2/3 column breakpoints and the required empty state.
+- Verified the existing `leaderCardsQuery` export matches the story query contract.
+- Added focused Node tests covering leader card behavior, About page integration, responsive grid classes, empty state, ISR metadata, and query fields.
+
 ### File List
+
+- `app/(site)/about/page.tsx`
+- `components/leader-card.tsx`
+- `tests/leadership-directory.test.mjs`
+- `_bmad-output/implementation-artifacts/3-1-leadership-directory-and-leader-cards.md`
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+
+### Change Log
+
+- 2026-07-02: Implemented leadership directory About page, LeaderCard component, focused tests, and story/sprint tracking updates.

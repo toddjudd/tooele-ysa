@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { LeaderCard } from "@/components/leader-card";
+import { MissionariesBlock } from "@/components/missionaries-block";
 import { leaderCardsQuery } from "@/lib/sanity/queries";
 import type { LeaderCardsQueryResult } from "@/lib/types";
 
@@ -76,6 +77,8 @@ export default async function AboutPage() {
           )}
         </div>
       </section>
+
+      <MissionariesBlock />
     </>
   );
 }

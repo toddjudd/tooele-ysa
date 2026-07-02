@@ -1,6 +1,10 @@
+---
+baseline_commit: a3d523dbba8c1dfc00a64e157d98cc4e129f64fe
+---
+
 # Story 3.2: Missionaries Section & Page Assembly
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -36,39 +40,43 @@ so that I or a friend can reach out to meet with missionaries in the Tooele area
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create the MissionariesBlock component (AC: #1, #2, #3, #4, #5, #6, #7, #11)
-  - [ ] Create `components/missionaries-block.tsx` as a PascalCase export
-  - [ ] Fully static — no props from CMS, no GROQ query, no Sanity dependency
-  - [ ] Section eyebrow: "OUR MISSIONARIES" in section-label style
-  - [ ] Section headline: e.g., "MEET WITH MISSIONARIES" in headline style
-  - [ ] Brief paragraph in body-lg explaining what missionaries do / how to reach them
-  - [ ] Phone number as `<a href="tel:+1XXXXXXXXXX">` with `aria-label="Call Tooele Missionaries: (XXX) XXX-XXXX"`
-  - [ ] Use placeholder phone number until Todd supplies the real one (OQ-3). Format: `(435) 555-0199` or similar placeholder with a code comment `// TODO: Replace with actual missionary phone number (OQ-3)`
-  - [ ] "Meet With Missionaries" button linking to `https://www.churchofjesuschrist.org/welcome/meet-with-missionaries?lang=eng`
-  - [ ] Button: primary style (accent-rust `#af5031` bg, white text, `14px 32px` padding, cta font `13px/700/uppercase/0.1em tracking`, hover `#8f3f23`, zero radius) OR ghost-dark if on light background
-  - [ ] External link: `target="_blank" rel="noopener noreferrer"`
-  - [ ] Button `aria-label`: include "(opens in new tab)" suffix via visually-hidden span
-  - [ ] Minimum 44×44px tap targets on phone link and button
+- [x] Task 1: Create the MissionariesBlock component (AC: #1, #2, #3, #4, #5, #6, #7, #11)
+  - [x] Create `components/missionaries-block.tsx` as a PascalCase export
+  - [x] Fully static — no props from CMS, no GROQ query, no Sanity dependency
+  - [x] Section eyebrow: "OUR MISSIONARIES" in section-label style
+  - [x] Section headline: e.g., "MEET WITH MISSIONARIES" in headline style
+  - [x] Brief paragraph in body-lg explaining what missionaries do / how to reach them
+  - [x] Phone number as `<a href="tel:+1XXXXXXXXXX">` with `aria-label="Call Tooele Missionaries: (XXX) XXX-XXXX"`
+  - [x] Use placeholder phone number until Todd supplies the real one (OQ-3). Format: `(435) 555-0199` or similar placeholder with a code comment `// TODO: Replace with actual missionary phone number (OQ-3)`
+  - [x] "Meet With Missionaries" button linking to `https://www.churchofjesuschrist.org/welcome/meet-with-missionaries?lang=eng`
+  - [x] Button: primary style (accent-rust `#af5031` bg, white text, `14px 32px` padding, cta font `13px/700/uppercase/0.1em tracking`, hover `#8f3f23`, zero radius) OR ghost-dark if on light background
+  - [x] External link: `target="_blank" rel="noopener noreferrer"`
+  - [x] Button `aria-label`: include "(opens in new tab)" suffix via visually-hidden span
+  - [x] Minimum 44×44px tap targets on phone link and button
 
-- [ ] Task 2: Assemble the complete About Us page (AC: #8, #9, #10, #12)
-  - [ ] Ensure `app/(site)/about/page.tsx` (created in Story 3.1) integrates both sections
-  - [ ] Page structure top to bottom:
+- [x] Task 2: Assemble the complete About Us page (AC: #8, #9, #10, #12)
+  - [x] Ensure `app/(site)/about/page.tsx` (created in Story 3.1) integrates both sections
+  - [x] Page structure top to bottom:
     1. Ward identity paragraph (placeholder text, `<h1>` — "About Us" or "About the Tooele YSA Ward")
     2. Leadership Directory section (`<h2>` — "OUR LEADERSHIP")
     3. Missionaries section (`<h2>` — "OUR MISSIONARIES")
-  - [ ] Verify semantic heading order: h1 → h2 → h2 (no skipped levels)
-  - [ ] Verify `<title>` is "About Us — Tooele YSA Ward"
-  - [ ] Verify dark/light alternation: light surface sections, no dark bands mid-page (UX-DR14)
-  - [ ] Ensure section vertical padding: 88px desktop / 56px mobile per @theme tokens
-  - [ ] Content constrained to container max-width (1100px), centered
+  - [x] Verify semantic heading order: h1 → h2 → h2 (no skipped levels)
+  - [x] Verify `<title>` is "About Us — Tooele YSA Ward"
+  - [x] Verify dark/light alternation: light surface sections, no dark bands mid-page (UX-DR14)
+  - [x] Ensure section vertical padding: 88px desktop / 56px mobile per @theme tokens
+  - [x] Content constrained to container max-width (1100px), centered
 
-- [ ] Task 3: Verify page-level integration (AC: all)
-  - [ ] Confirm ISR `export const revalidate = 60` is set (from Story 3.1)
-  - [ ] Confirm GROQ error handling for leadership section doesn't affect missionaries section
-  - [ ] Missionaries section renders independently of Sanity availability
-  - [ ] Page renders correctly at 375px viewport and up
-  - [ ] All keyboard navigation works (Tab through links, focus visible)
-  - [ ] Skip-to-main-content link works on this page
+- [x] Task 3: Verify page-level integration (AC: all)
+  - [x] Confirm ISR `export const revalidate = 60` is set (from Story 3.1)
+  - [x] Confirm GROQ error handling for leadership section doesn't affect missionaries section
+  - [x] Missionaries section renders independently of Sanity availability
+  - [x] Page renders correctly at 375px viewport and up
+  - [x] All keyboard navigation works (Tab through links, focus visible)
+  - [x] Skip-to-main-content link works on this page
+
+### Review Findings
+
+- [x] [Review][Patch] Let the visually-hidden new-tab suffix participate in the CTA accessible name [components/missionaries-block.tsx:33] — fixed by removing the redundant `aria-label` from the external CTA so the visible link text plus `sr-only` suffix forms the accessible name.
 
 ## Dev Notes
 
@@ -195,8 +203,29 @@ The placeholder must be:
 
 ### Agent Model Used
 
+github-copilot/gpt-5.5
+
 ### Debug Log References
+
+- `pnpm test` red phase: failed because `components/missionaries-block.tsx` did not exist.
+- `pnpm test` green/final: 26 tests passed.
+- `pnpm lint`: passed with one pre-existing warning in `.agents/skills/create-agent-with-sanity-context/references/ecommerce/app/src/app/api/chat/route.ts`.
+- `pnpm build`: passed.
 
 ### Completion Notes List
 
+- Added a fully static `MissionariesBlock` presentation component with placeholder missionary phone number, accessible `tel:` link, external Church CTA, primary rust button styling, and 44px minimum tap targets.
+- Integrated `MissionariesBlock` below the leadership directory on `/about` without changing leadership data fetching or Sanity error handling.
+- Added Node regression tests covering static rendering requirements, external-link contract, visual/accessibility guardrails, ISR metadata, and page section order.
+
 ### File List
+
+- `_bmad-output/implementation-artifacts/3-2-missionaries-section-and-page-assembly.md`
+- `_bmad-output/implementation-artifacts/sprint-status.yaml`
+- `app/(site)/about/page.tsx`
+- `components/missionaries-block.tsx`
+- `tests/missionaries-section.test.mjs`
+
+### Change Log
+
+- 2026-07-02: Implemented Story 3.2 missionaries block, about page assembly, regression tests, and review-ready tracking updates.

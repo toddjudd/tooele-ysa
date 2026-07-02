@@ -22,7 +22,8 @@ test("LeaderCard component matches the required card and contact-link contract",
   assert.match(component, /tracking-\[0\.14em\]/);
   assert.match(component, /text-primary/);
   assert.match(component, /text-body-sm text-on-surface-muted/);
-  assert.match(component, /href=\{`tel:\$\{phone\}`\}/);
+  assert.match(component, /phone\.replace\(\/\[\^\+\\d\]\/g, ""\)/);
+  assert.match(component, /href=\{`tel:\$\{phoneHref\}`\}/);
   assert.match(component, /aria-label=\{`Call \$\{name\}: \$\{phone\}`\}/);
   assert.match(component, /href=\{`mailto:\$\{email\}`\}/);
   assert.match(component, /aria-label=\{`Email \$\{name\}`\}/);

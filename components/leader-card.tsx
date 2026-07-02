@@ -6,6 +6,8 @@ type LeaderCardProps = {
 };
 
 export function LeaderCard({ name, title, phone, email }: LeaderCardProps) {
+  const phoneHref = phone ? phone.replace(/[^+\d]/g, "") : null;
+
   return (
     <article className="bg-surface border border-border p-stack-md">
       <h3 className="text-section-label tracking-[0.14em] text-primary">{name}</h3>
@@ -14,7 +16,7 @@ export function LeaderCard({ name, title, phone, email }: LeaderCardProps) {
         <div className="mt-stack-sm text-body-sm">
           {phone && (
             <a
-              href={`tel:${phone}`}
+              href={`tel:${phoneHref}`}
               aria-label={`Call ${name}: ${phone}`}
               className="flex min-h-11 items-center text-accent-rust transition-colors hover:text-accent-teal focus-visible:ring-2 focus-visible:ring-accent-teal focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
             >
