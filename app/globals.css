@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-montserrat), Montserrat, sans-serif;
+
+  --color-surface: #FAFAF8;
+  --color-surface-warm: #F3EDE3;
+  --color-on-surface: #111111;
+  --color-on-surface-muted: #5a5550;
+  --color-border: #d6cfc6;
+  --color-primary: #092f33;
+  --color-on-primary: #FFFFFF;
+  --color-accent-rust: #af5031;
+  --color-on-accent-rust: #FFFFFF;
+  --color-accent-teal: #7fc7cc;
+  --color-on-accent-teal: #092f33;
+  --color-accent-olive: #4b5b34;
+  --color-on-accent-olive: #FFFFFF;
+  --color-accent-amber: #ed8913;
+  --color-on-accent-amber: #092f33;
+  --color-accent-sand: #e4cba9;
+  --color-on-accent-sand: #092f33;
+  --color-accent-blush: #fdaba5;
+  --color-on-accent-blush: #092f33;
+  --color-accent-crimson: #980204;
+  --color-on-accent-crimson: #FFFFFF;
+
+  --text-display: 56px;
+  --text-display--font-weight: 900;
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: 0.02em;
+  --text-display-mobile: 34px;
+  --text-display-mobile--font-weight: 900;
+  --text-display-mobile--line-height: 1.05;
+  --text-display-mobile--letter-spacing: 0.02em;
+  --text-headline: 30px;
+  --text-headline--font-weight: 800;
+  --text-headline--line-height: 1.1;
+  --text-headline--letter-spacing: 0.01em;
+  --text-headline-mobile: 22px;
+  --text-headline-mobile--font-weight: 800;
+  --text-headline-mobile--line-height: 1.15;
+  --text-headline-mobile--letter-spacing: 0.01em;
+  --text-section-label: 12px;
+  --text-section-label--font-weight: 700;
+  --text-section-label--line-height: 1.4;
+  --text-section-label--letter-spacing: 0.14em;
+  --text-body-lg: 18px;
+  --text-body-lg--font-weight: 400;
+  --text-body-lg--line-height: 1.75;
+  --text-body: 16px;
+  --text-body--font-weight: 400;
+  --text-body--line-height: 1.7;
+  --text-body-sm: 14px;
+  --text-body-sm--font-weight: 400;
+  --text-body-sm--line-height: 1.6;
+  --text-cta: 13px;
+  --text-cta--font-weight: 700;
+  --text-cta--line-height: 1;
+  --text-cta--letter-spacing: 0.1em;
+
+  --spacing-section-v: 88px;
+  --spacing-section-v-mobile: 56px;
+  --spacing-container-max: 1100px;
+  --spacing-container-px: 20px;
+  --spacing-container-px-lg: 48px;
+  --spacing-stack-sm: 16px;
+  --spacing-stack-md: 24px;
+  --spacing-stack-lg: 40px;
+  --spacing-stack-xl: 64px;
+
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-full: 9999px;
+}
+
+html {
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+}
+
+.text-display,
+.text-display-mobile,
+.text-headline,
+.text-headline-mobile,
+.text-section-label,
+.text-cta {
+  text-transform: uppercase;
+}
