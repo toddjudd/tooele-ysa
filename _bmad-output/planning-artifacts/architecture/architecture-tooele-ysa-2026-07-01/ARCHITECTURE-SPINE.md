@@ -109,11 +109,11 @@ graph LR
 - **Prevents:** two implementation paths hitting the Sanity API with divergent caching, error handling, or token usage
 - **Rule:** All GROQ queries and client configuration go through `next-sanity`. No raw `fetch()` to `https://PROJECT.api.sanity.io`. All queries are named exports from `lib/sanity/queries.ts`; no inline query strings in page files.
 
-### AD-5 — Sanity CDN owns all image transformation
+### AD-5 — Sanity CDN owns all image transformation; `sanity-image.tsx` is the mandatory wrapper
 
 - **Binds:** FR-1 (hero carousel), FR-9 (leader card images), NFR-1, NFR-2
-- **Prevents:** Vercel Image Optimization chained after Sanity CDN (double-processing cost and format conflict); inconsistent WebP/srcset output across components
-- **Rule:** Sanity-sourced images are delivered via `@sanity/image-url` builder pointed at the Sanity CDN, with explicit `width`, `format('webp')`, and `quality` params. `next/image` is configured with a [Sanity image loader](https://www.sanity.io/docs/image-url) so Vercel's optimizer is bypassed for Sanity URLs. Static assets in `public/` (floor plan, app icons) use `next/image` with the default Vercel optimizer.
+- **Prevents:** Vercel Image Optimization chained after Sanity CDN; raw `<img>` or un-configured `next/image` with Sanity URLs; inconsistent crop/format params across components
+- **Rule:** Every Sanity-sourced image must render through `components/sanity-image.tsx`. That wrapper uses `@sanity/image-url` v2 builder with explicit `width`, `.format('webp')`, and `.quality(80)` params; `next/image` is configured with a Sanity CDN loader so Vercel's optimizer is bypassed. No component renders a Sanity asset URL via raw `<img>` or un-wrapped `next/image`. `heroImage` schema field uses `type: 'image'` with `hotspot: true`. Static assets in `public/` (floor plan, app icons) use `next/image` with the default Vercel optimizer.
 
 ### AD-6 — No auth surface in Next.js
 
@@ -127,11 +127,35 @@ graph LR
 - **Prevents:** secrets committed to the repo; manual deploy steps; divergent deployment targets
 - **Rule:** `main` branch auto-deploys to Vercel production. PR branches deploy to Vercel preview. The four required env vars (`SANITY_API_READ_TOKEN`, `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_STUDIO_URL`) are set in the Vercel project dashboard only — never in `.env.local` committed to the repo.
 
-### AD-8 — Tailwind CSS only; tokens from DESIGN.md
+### AD-8 — Tailwind CSS v4 only; tokens live in `globals.css @theme`; no component library
 
 - **Binds:** all UI components, NFR-6
-- **Prevents:** a second design system (shadcn, MUI, Radix) introducing tokens that conflict with DESIGN.md; inconsistent color or typography across components
-- **Rule:** All styling is Tailwind utility classes. No component library is installed. Every color, typography, and spacing token from `DESIGN.md` is implemented as a Tailwind config extension in `tailwind.config.ts` (or `tailwind.css` under Tailwind v4 CSS-first config). DESIGN.md wins on any visual conflict.
+- **Prevents:** a second design system (shadcn, MUI, Radix) introducing tokens that conflict with DESIGN.md; using Tailwind v3 config patterns (a `tailwind.config.ts` extension file) that break under v4's CSS-first build
+- **Rule:** All styling is Tailwind v4 utility classes. No component library is installed. Tailwind v4 is configured CSS-first: `@import "tailwindcss"` in `globals.css`, with all DESIGN.md color/typography/spacing tokens declared in a `@theme {}` block in that same file — not in a JS config file. DESIGN.md wins on any visual conflict.
+
+### AD-9 — Sanity client is a singleton with fixed configuration
+
+- **Binds:** FR-1, FR-9, FR-14; all GROQ data access
+- **Prevents:** two pages constructing Sanity clients with different `apiVersion`, `useCdn`, or `perspective` values that return different data shapes or caching behavior
+- **Rule:** One client instance is exported from `lib/sanity/client.ts`. Required params: `apiVersion` set to the scaffold date (ISO format, e.g. `'2026-07-01'`); `useCdn: true` for production reads; `perspective: 'published'`; `dataset` and `projectId` from env vars. All page and component files import this singleton — they never call `createClient()` themselves.
+
+### AD-10 — Sanity schema field type contracts
+
+- **Binds:** `sanity/schema-types/`; `lib/types.ts`; all CMS-dependent components
+- **Prevents:** `wardEvent` schema using Sanity `date` type (YYYY-MM-DD string) when the component expects a full ISO timestamp for time display; `heroImage` schema omitting `hotspot` so crop-aware image rendering breaks
+- **Rule:** `wardEvent.dateTime` is Sanity type `datetime` (full ISO 8601 timestamp). `heroImage.image` is Sanity type `image` with `options: { hotspot: true }`. `leaderCard.phone` and `leaderCard.email` are Sanity type `string`, marked optional (`validation: Rule => Rule.optional()`). These field contracts are the boundary between Content and Presentation — neither side may assume a different shape.
+
+### AD-11 — TypeScript strict mode; `sanity-typegen` for schema-derived types
+
+- **Binds:** all TypeScript files
+- **Prevents:** `any` in component props allowing mismatched Sanity document shapes to slip through; hand-authored types in `lib/types.ts` diverging from the actual Sanity schema over time
+- **Rule:** `tsconfig.json` sets `"strict": true`. No `any` is permitted (use `unknown` + type guard if needed). Sanity document TypeScript types are generated via `sanity-typegen` from the schema — not hand-authored — and live in `lib/types.ts`. Regenerate types whenever a schema field changes.
+
+### AD-12 — ISR page GROQ error handling: return empty, never throw
+
+- **Binds:** all ISR pages (`/`, `/about`, `/connect`)
+- **Prevents:** a GROQ fetch failure causing a Next.js 500 (unhandled throw in RSC) on one ISR page while other pages handle it differently
+- **Rule:** Every Server Component GROQ fetch is wrapped in `try/catch`. On catch, return an empty array (or the equivalent empty type) and let the component render its established empty state (per EXPERIENCE.md). Do not re-throw. Do not show an error boundary in v1 — the graceful empty state is the contract.
 
 ## Consistency Conventions
 
@@ -140,7 +164,7 @@ graph LR
 | File naming      | Components: `kebab-case.tsx`. Directories: `kebab-case/`. Route segments follow Next.js App Router conventions.                    |
 | Component naming | PascalCase exports. One component per file.                                                                                        |
 | GROQ queries     | Named exports from `lib/sanity/queries.ts` only. Prefixed by domain: `heroImagesQuery`, `leaderCardsQuery`, `upcomingEventsQuery`. |
-| TypeScript types | Sanity document types defined in `lib/types.ts`; derived from schema by hand or `sanity-typegen`. No `any`; strict mode on.        |
+| TypeScript types | Generated by `sanity-typegen` from schema; live in `lib/types.ts`. No `any`; `tsconfig.json` `strict: true` (AD-11).               |
 | Env vars         | Server-only: no `NEXT_PUBLIC_` prefix. Client-safe: `NEXT_PUBLIC_` prefix. No secrets in source.                                   |
 | External links   | `target="_blank" rel="noopener noreferrer"` on every external link — no exceptions (enforced in components, not inline JSX).       |
 | ISR declaration  | `export const revalidate = 60` at the top of each ISR page module. Never use `force-dynamic`.                                      |
@@ -183,7 +207,7 @@ tooele-ysa/
       [[...tool]]/
         page.tsx                  # Embedded Sanity Studio — Sanity auth only
     layout.tsx                    # Root layout: <html>, globals.css, font loading
-    globals.css
+    globals.css                    # @import "tailwindcss"; @theme { all DESIGN.md tokens } (Tailwind v4 CSS-first)
   components/
     site-nav.tsx                  # Sticky top nav + mobile hamburger drawer
     footer.tsx                    # Dark footer band
@@ -210,7 +234,6 @@ tooele-ysa/
     images/
       floor-plan.*                # Static building layout (supplied by Todd at build)
       app-icons/                  # LDS app icon PNGs/SVGs
-  tailwind.config.ts              # Token extensions from DESIGN.md
   next.config.ts                  # Sanity image remote pattern; no other dynamic config
   .env.local                      # Local dev only — NOT committed
   .env.example                    # Template listing required env var names (committed)
@@ -246,25 +269,26 @@ graph TB
 
 ## Capability → Architecture Map
 
-| Capability / FR                  | Lives in                                                    | Governed by                                            |
-| -------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------ |
-| FR-1 Hero Carousel               | `app/(site)/page.tsx` + `components/hero-carousel.tsx`      | AD-2 (ISR), AD-3 (RSC), AD-4 (next-sanity), AD-5 (CDN) |
-| FR-2 Tagline                     | `app/(site)/page.tsx` (static JSX)                          | AD-2 (SSG-within-ISR)                                  |
-| FR-3 Static content blocks       | `app/(site)/page.tsx`                                       | AD-2                                                   |
-| FR-4 Google Maps CTA             | `app/(site)/page.tsx`                                       | Convention: external link rule                         |
-| FR-5–8 Gatherings content        | `app/(site)/gatherings/page.tsx`                            | AD-2 (SSG)                                             |
-| FR-9–10 Leadership Directory     | `app/(site)/about/page.tsx` + `components/leader-card.tsx`  | AD-2 (ISR), AD-3 (RSC), AD-4, AD-5                     |
-| FR-11 Missionaries block         | `components/missionaries-block.tsx`                         | AD-6 (no auth); fully static                           |
-| FR-12 LDS App links              | `components/app-link-card.tsx`                              | Convention: external link rule                         |
-| FR-13 Social links (Coming Soon) | `components/app-link-card.tsx`                              | AD-8 (Tailwind state); OQ-1, OQ-2                      |
-| FR-14–15 Events Calendar         | `app/(site)/connect/page.tsx` + `components/event-item.tsx` | AD-2 (ISR), AD-3 (RSC), AD-4                           |
-| FR-16 Global navigation          | `components/site-nav.tsx`                                   | AD-8 (Tailwind); Convention: active link               |
-| FR-17 Footer                     | `components/footer.tsx`                                     | AD-8 (Tailwind)                                        |
-| Sanity content schemas           | `sanity/schema-types/`                                      | AD-1 (boundary)                                        |
-| Sanity Studio                    | `app/studio/[[...tool]]/page.tsx`                           | AD-6 (Sanity auth only)                                |
-| Image delivery                   | `components/sanity-image.tsx` + `lib/sanity/image.ts`       | AD-5 (CDN)                                             |
-| GROQ data access                 | `lib/sanity/client.ts` + `lib/sanity/queries.ts`            | AD-3 (server-only), AD-4 (next-sanity)                 |
-| Environment / secrets            | Vercel dashboard + `.env.example`                           | AD-3 (token boundary), AD-7 (no secrets in repo)       |
+| Capability / FR                  | Lives in                                                    | Governed by                                              |
+| -------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
+| FR-1 Hero Carousel               | `app/(site)/page.tsx` + `components/hero-carousel.tsx`      | AD-2 (ISR), AD-3 (RSC), AD-4 (next-sanity), AD-5 (CDN)   |
+| FR-2 Tagline                     | `app/(site)/page.tsx` (static JSX)                          | AD-2 (SSG-within-ISR)                                    |
+| FR-3 Static content blocks       | `app/(site)/page.tsx`                                       | AD-2                                                     |
+| FR-4 Google Maps CTA             | `app/(site)/page.tsx`                                       | Convention: external link rule                           |
+| FR-5–8 Gatherings content        | `app/(site)/gatherings/page.tsx`                            | AD-2 (SSG)                                               |
+| FR-9–10 Leadership Directory     | `app/(site)/about/page.tsx` + `components/leader-card.tsx`  | AD-2 (ISR), AD-3 (RSC), AD-4, AD-5                       |
+| FR-11 Missionaries block         | `components/missionaries-block.tsx`                         | AD-6 (no auth); fully static                             |
+| FR-12 LDS App links              | `components/app-link-card.tsx`                              | Convention: external link rule                           |
+| FR-13 Social links (Coming Soon) | `components/app-link-card.tsx`                              | AD-8 (Tailwind state); OQ-1, OQ-2                        |
+| FR-14–15 Events Calendar         | `app/(site)/connect/page.tsx` + `components/event-item.tsx` | AD-2 (ISR), AD-3 (RSC), AD-4, AD-10, AD-12               |
+| FR-16 Global navigation          | `components/site-nav.tsx`                                   | AD-8 (Tailwind); Convention: active link                 |
+| FR-17 Footer                     | `components/footer.tsx`                                     | AD-8 (Tailwind)                                          |
+| Sanity content schemas           | `sanity/schema-types/`                                      | AD-1 (boundary), AD-10 (field type contracts)            |
+| Sanity Studio                    | `app/studio/[[...tool]]/page.tsx`                           | AD-6 (Sanity auth only)                                  |
+| Image delivery                   | `components/sanity-image.tsx` + `lib/sanity/image.ts`       | AD-5 (CDN, mandatory wrapper)                            |
+| GROQ data access                 | `lib/sanity/client.ts` + `lib/sanity/queries.ts`            | AD-3 (server-only), AD-4 (next-sanity), AD-9 (singleton) |
+| TypeScript types                 | `lib/types.ts` (sanity-typegen output)                      | AD-11 (strict, typegen)                                  |
+| Environment / secrets            | Vercel dashboard + `.env.example`                           | AD-3 (token boundary), AD-7 (no secrets in repo)         |
 
 ## Deferred
 
