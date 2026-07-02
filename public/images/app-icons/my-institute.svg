@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="My Institute icon">
+  <rect width="64" height="64" fill="#7fc7cc"/>
+  <path d="M12 28 32 14l20 14v6H12v-6Z" fill="#092f33"/>
+  <path d="M18 36h6v12h-6zM29 36h6v12h-6zM40 36h6v12h-6zM14 50h36v5H14z" fill="#092f33"/>
+  <path d="M28 25h8" stroke="#fff" stroke-width="4"/>
+</svg>

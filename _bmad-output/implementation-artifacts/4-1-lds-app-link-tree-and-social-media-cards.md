@@ -1,6 +1,10 @@
+---
+baseline_commit: a3d523dbba8c1dfc00a64e157d98cc4e129f64fe
+---
+
 # Story 4.1: LDS App Link Tree & Social Media Cards
 
-Status: ready-for-dev
+Status: in-progress
 
 ## Story
 

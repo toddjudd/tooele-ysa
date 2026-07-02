@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Gospel Living icon">
+  <rect width="64" height="64" fill="#7fc7cc"/>
+  <path d="M32 48S16 39 16 26a10 10 0 0 1 16-8 10 10 0 0 1 16 8c0 13-16 22-16 22Z" fill="#092f33"/>
+  <path d="M32 22v18M23 31h18" stroke="#fff" stroke-width="4" stroke-linecap="square"/>
+</svg>

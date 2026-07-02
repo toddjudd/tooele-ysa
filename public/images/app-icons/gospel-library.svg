@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Gospel Library icon">
+  <rect width="64" height="64" fill="#7fc7cc"/>
+  <path d="M18 14h23a7 7 0 0 1 7 7v29H21a7 7 0 0 1-7-7V18a4 4 0 0 1 4-4Z" fill="#092f33"/>
+  <path d="M22 22h17M22 30h18M22 38h14" stroke="#fff" stroke-width="4" stroke-linecap="square"/>
+</svg>
