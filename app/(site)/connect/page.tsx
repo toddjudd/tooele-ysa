@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { AppLinkCard } from "@/components/app-link-card";
+import { EventItem } from "@/components/event-item";
+import { client } from "@/lib/sanity/client";
+import { upcomingEventsQuery } from "@/lib/sanity/queries";
+import { fetchUpcomingEvents } from "@/lib/sanity/upcoming-events";
 
 export const revalidate = 60;
 
@@ -49,7 +53,9 @@ function AppIcon({ iconSrc }: { iconSrc: string }) {
   return <Image src={iconSrc} alt="" width={40} height={40} className="h-10 w-10" aria-hidden="true" />;
 }
 
-export default function ConnectPage() {
+export default async function ConnectPage() {
+  const events = await fetchUpcomingEvents(client, upcomingEventsQuery);
+
   return (
     <>
       <section aria-labelledby="connect-heading" className="bg-surface text-on-surface">
@@ -95,6 +101,32 @@ export default function ConnectPage() {
                 comingSoon={true}
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="events-heading" className="bg-surface text-on-surface">
+        <div className="mx-auto w-full max-w-container-max px-container-px py-section-v-mobile lg:px-container-px-lg lg:py-section-v">
+          <div className="max-w-3xl">
+            <p className="text-section-label tracking-[0.14em] text-accent-rust">UPCOMING EVENTS</p>
+            <h2 id="events-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
+              Upcoming Events
+            </h2>
+            {events.length > 0 ? (
+              <div className="mt-stack-lg space-y-stack-md">
+                {events.map((event) => (
+                  <EventItem
+                    key={event._id}
+                    title={event.title}
+                    dateTime={event.dateTime}
+                    description={event.description}
+                    location={event.location}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="mt-stack-md text-body text-on-surface-muted">No upcoming events listed yet.</p>
+            )}
           </div>
         </div>
       </section>

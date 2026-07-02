@@ -4,7 +4,7 @@ baseline_commit: a3d523dbba8c1dfc00a64e157d98cc4e129f64fe
 
 # Story 4.1: LDS App Link Tree & Social Media Cards
 
-Status: in-progress
+Status: done
 
 ## Story
 
@@ -36,43 +36,47 @@ so that I don't have to search for each app or account separately.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Create `/connect` page route and shell (AC: #1, #7)
-  - [ ] Create `app/(site)/connect/page.tsx` with ISR (`export const revalidate = 60`)
-  - [ ] Set page `<title>` to "Let's Connect — Tooele YSA Ward"
-  - [ ] Add semantic `<h1>` for the page
-  - [ ] Scaffold page with section-band pattern: eyebrow → headline → content
+- [x] Task 1: Create `/connect` page route and shell (AC: #1, #7)
+  - [x] Create `app/(site)/connect/page.tsx` with ISR (`export const revalidate = 60`)
+  - [x] Set page `<title>` to "Let's Connect — Tooele YSA Ward"
+  - [x] Add semantic `<h1>` for the page
+  - [x] Scaffold page with section-band pattern: eyebrow → headline → content
 
-- [ ] Task 2: Build `AppLinkCard` component (AC: #2, #4, #5, #8)
-  - [ ] Create `components/app-link-card.tsx`
-  - [ ] Props: `name: string`, `href: string`, `icon: React.ReactNode`, `comingSoon?: boolean`
-  - [ ] Dark primary background (`bg-[--color-primary]`), zero border-radius
-  - [ ] App name in section-label typography, on-primary color
-  - [ ] Icon in accent-teal color
-  - [ ] Padding: 20px top/bottom, 24px left/right
-  - [ ] Hover state: background shifts to `#0d4549`
-  - [ ] `aria-label="Open {name}"` with visually-hidden "(opens in new tab)" suffix
-  - [ ] External link attributes: `target="_blank" rel="noopener noreferrer"`
-  - [ ] Minimum 44×44px tap target (the entire card is the tap target)
-  - [ ] Focus ring via Tailwind `ring` utility for keyboard users
+- [x] Task 2: Build `AppLinkCard` component (AC: #2, #4, #5, #8)
+  - [x] Create `components/app-link-card.tsx`
+  - [x] Props: `name: string`, `href: string`, `icon: React.ReactNode`, `comingSoon?: boolean`
+  - [x] Dark primary background (`bg-[--color-primary]`), zero border-radius
+  - [x] App name in section-label typography, on-primary color
+  - [x] Icon in accent-teal color
+  - [x] Padding: 20px top/bottom, 24px left/right
+  - [x] Hover state: background shifts to `#0d4549`
+  - [x] `aria-label="Open {name}"` with visually-hidden "(opens in new tab)" suffix
+  - [x] External link attributes: `target="_blank" rel="noopener noreferrer"`
+  - [x] Minimum 44×44px tap target (the entire card is the tap target)
+  - [x] Focus ring via Tailwind `ring` utility for keyboard users
 
-- [ ] Task 3: Build "Coming Soon" variant for social media cards (AC: #6)
-  - [ ] When `comingSoon` is true, render with `href="#"` (no navigation)
-  - [ ] Add visible "Coming Soon" badge — pill-shaped (`rounded-full` is the ONLY allowed round element per DESIGN.md), positioned within the card
-  - [ ] Muted visual treatment: reduced opacity or desaturated styling to distinguish from active cards
-  - [ ] Suppress hover background shift on coming-soon cards
-  - [ ] No `target="_blank"` when href is "#"
+- [x] Task 3: Build "Coming Soon" variant for social media cards (AC: #6)
+  - [x] When `comingSoon` is true, render with `href="#"` (no navigation)
+  - [x] Add visible "Coming Soon" badge — pill-shaped (`rounded-full` is the ONLY allowed round element per DESIGN.md), positioned within the card
+  - [x] Muted visual treatment: reduced opacity or desaturated styling to distinguish from active cards
+  - [x] Suppress hover background shift on coming-soon cards
+  - [x] No `target="_blank"` when href is "#"
 
-- [ ] Task 4: Add app icon assets (AC: #2)
-  - [ ] Place SVG or PNG icons in `public/images/app-icons/` for: Gospel Library, Gospel Living, Member Tools, My Institute, Instagram, Facebook
-  - [ ] Use simple, recognizable icons — can be generic app-style icons for LDS apps
-  - [ ] Instagram and Facebook can use standard brand icons
+- [x] Task 4: Add app icon assets (AC: #2)
+  - [x] Place SVG or PNG icons in `public/images/app-icons/` for: Gospel Library, Gospel Living, Member Tools, My Institute, Instagram, Facebook
+  - [x] Use simple, recognizable icons — can be generic app-style icons for LDS apps
+  - [x] Instagram and Facebook can use standard brand icons
 
-- [ ] Task 5: Assemble link tree grid on `/connect` page (AC: #1, #7)
-  - [ ] Responsive grid: `grid-cols-2` mobile, `grid-cols-4` at desktop breakpoint (≥1024px)
-  - [ ] Render all four LDS app cards with correct URLs
-  - [ ] Render Instagram and Facebook cards with `comingSoon={true}` and `href="#"`
-  - [ ] Section structure: eyebrow ("STAY CONNECTED" or similar) → headline → card grid
-  - [ ] Section uses surface or surface-warm background per dark/light alternation (UX-DR14)
+- [x] Task 5: Assemble link tree grid on `/connect` page (AC: #1, #7)
+  - [x] Responsive grid: `grid-cols-2` mobile, `grid-cols-4` at desktop breakpoint (≥1024px)
+  - [x] Render all four LDS app cards with correct URLs
+  - [x] Render Instagram and Facebook cards with `comingSoon={true}` and `href="#"`
+  - [x] Section structure: eyebrow ("STAY CONNECTED" or similar) → headline → card grid
+  - [x] Section uses surface or surface-warm background per dark/light alternation (UX-DR14)
+
+### Review Findings
+
+- [x] [Review][Patch] Prevent coming-soon social cards from behaving like active links [components/app-link-card.tsx:13] — fixed by marking the coming-soon anchor disabled, removing it from tab order, and using an unavailable-state accessible label.
 
 ## Dev Notes
 
@@ -146,8 +150,42 @@ app-link-card:
 
 ### Agent Model Used
 
+github-copilot/gpt-5.5
+
+### Implementation Plan
+
+- Added source-level Node tests for the `/connect` route, `AppLinkCard`, external-link behavior, coming-soon behavior, responsive grid classes, icon references, and required static/ISR contract.
+- Implemented the `/connect` page shell with metadata, ISR, semantic page and section headings, and static app/social link data.
+- Implemented the reusable `AppLinkCard` component with active and coming-soon variants using Tailwind v4 token utilities.
+- Added six SVG icon assets under `public/images/app-icons/`.
+
 ### Debug Log References
+
+- `pnpm test` red phase: failed on missing `/connect` implementation, missing links/icons, and missing `components/app-link-card.tsx`.
+- `pnpm test`: 32 tests passed after implementation.
+- `pnpm lint`: completed with 0 errors and 1 pre-existing warning in `.agents/skills/create-agent-with-sanity-context/references/ecommerce/app/src/app/api/chat/route.ts`.
 
 ### Completion Notes List
 
+- Implemented `/connect` as an ISR page with title `Let's Connect — Tooele YSA Ward`, one semantic `<h1>`, and section-band rhythm.
+- Added four active LDS app cards with the required external URLs, new-tab attributes, accessible labels, hidden new-tab suffix text, hover state, focus ring, token colors, zero-radius card shape, and 44px minimum target sizing.
+- Added Instagram and Facebook cards as muted coming-soon cards using `href="#"`, no external-link attributes, no hover shift, and a pill-shaped `Coming Soon` badge.
+- Added static SVG icons for Gospel Library, Gospel Living, Member Tools, My Institute, Instagram, and Facebook.
+- Added regression tests covering the page shell, links, responsive classes, icon assets, card component contract, and coming-soon variant.
+
 ### File List
+
+- `app/(site)/connect/page.tsx`
+- `app/(site)/connect/page.test.mjs`
+- `components/app-link-card.tsx`
+- `components/app-link-card.test.mjs`
+- `public/images/app-icons/gospel-library.svg`
+- `public/images/app-icons/gospel-living.svg`
+- `public/images/app-icons/member-tools.svg`
+- `public/images/app-icons/my-institute.svg`
+- `public/images/app-icons/instagram.svg`
+- `public/images/app-icons/facebook.svg`
+
+## Change Log
+
+- 2026-07-02: Implemented LDS app link tree and social media coming-soon cards for `/connect`; added component, icon assets, and regression tests.

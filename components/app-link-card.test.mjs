@@ -28,10 +28,13 @@ test("app link card uses the required visual tokens and accessibility affordance
 });
 
 test("app link card renders a muted coming-soon variant without external-link behavior", () => {
-  assert.match(source, /href=\{comingSoon \? "#" : href\}/);
-  assert.match(source, /event\.preventDefault\(\)/);
+  assert.match(source, /if \(comingSoon\)/);
+  assert.match(source, /aria-label=\{`\$\{name\} coming soon`\}/);
+  assert.match(source, /aria-disabled="true"/);
+  assert.doesNotMatch(source, /href=\{comingSoon \? "#" : href\}/);
+  assert.doesNotMatch(source, /tabIndex=\{comingSoon \? -1 : undefined\}/);
   assert.match(source, /Coming Soon/);
   assert.match(source, /rounded-full/);
   assert.match(source, /opacity-/);
-  assert.match(source, /pointer-events-none/);
+  assert.doesNotMatch(source, /pointer-events-none/);
 });

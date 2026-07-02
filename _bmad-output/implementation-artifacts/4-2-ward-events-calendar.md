@@ -1,6 +1,10 @@
+---
+baseline_commit: 8b31288fe196446fa3b2d43a898e315b08c89e92
+---
+
 # Story 4.2: Ward Events Calendar
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -28,50 +32,55 @@ so that I know what events are coming up without having to ask in a group text.
 
 ## Tasks / Subtasks
 
-- [ ] Task 1: Verify `wardEvent` schema exists (dependency from Story 1.2)
-  - [ ] Confirm `sanity/schema-types/ward-event.ts` exists with fields: `title` (string, required), `dateTime` (datetime, required), `description` (text, optional), `location` (string, optional)
-  - [ ] Confirm schema field labels use plain language (e.g., "Event Title", "Date & Time", "Description", "Location")
-  - [ ] Confirm `wardEvent` is registered in `sanity/schema-types/index.ts`
+- [x] Task 1: Verify `wardEvent` schema exists (dependency from Story 1.2)
+  - [x] Confirm `sanity/schema-types/ward-event.ts` exists with fields: `title` (string, required), `dateTime` (datetime, required), `description` (text, optional), `location` (string, optional)
+  - [x] Confirm schema field labels use plain language (e.g., "Event Title", "Date & Time", "Description", "Location")
+  - [x] Confirm `wardEvent` is registered in `sanity/schema-types/index.ts`
 
-- [ ] Task 2: Verify `upcomingEventsQuery` exists in queries.ts (dependency from Story 1.2)
-  - [ ] Confirm `lib/sanity/queries.ts` has named export `upcomingEventsQuery`
-  - [ ] Query must: filter `_type == "wardEvent"` AND `dateTime >= now()`, order by `dateTime asc`, limit to 20 results (`[0...20]`)
-  - [ ] Query selects: `_id`, `title`, `dateTime`, `description`, `location`
+- [x] Task 2: Verify `upcomingEventsQuery` exists in queries.ts (dependency from Story 1.2)
+  - [x] Confirm `lib/sanity/queries.ts` has named export `upcomingEventsQuery`
+  - [x] Query must: filter `_type == "wardEvent"` AND `dateTime >= now()`, order by `dateTime asc`, limit to 20 results (`[0...20]`)
+  - [x] Query selects: `_id`, `title`, `dateTime`, `description`, `location`
 
-- [ ] Task 3: Build `EventItem` component (AC: #2, #3, #4)
-  - [ ] Create `components/event-item.tsx`
-  - [ ] Props: `title: string`, `dateTime: string`, `description?: string`, `location?: string`
-  - [ ] Left border: 3px solid accent-rust (`border-l-[3px] border-[--color-accent-rust]`)
-  - [ ] Date line: section-label typography, accent-rust color — formatted human-readable (e.g., "Monday, July 7 at 7:00 PM")
-  - [ ] Title: body-lg typography, on-surface color
-  - [ ] Optional description: body typography, on-surface-muted color — only rendered when present
-  - [ ] Optional location: body-sm typography, on-surface-muted — only rendered when present
-  - [ ] No card frame, no background, no border-radius — visually light list item
-  - [ ] Appropriate vertical spacing between items (stack-md: 24px)
+- [x] Task 3: Build `EventItem` component (AC: #2, #3, #4)
+  - [x] Create `components/event-item.tsx`
+  - [x] Props: `title: string`, `dateTime: string`, `description?: string`, `location?: string`
+  - [x] Left border: 3px solid accent-rust (`border-l-[3px] border-[--color-accent-rust]`)
+  - [x] Date line: section-label typography, accent-rust color — formatted human-readable (e.g., "Monday, July 7 at 7:00 PM")
+  - [x] Title: body-lg typography, on-surface color
+  - [x] Optional description: body typography, on-surface-muted color — only rendered when present
+  - [x] Optional location: body-sm typography, on-surface-muted — only rendered when present
+  - [x] No card frame, no background, no border-radius — visually light list item
+  - [x] Appropriate vertical spacing between items (stack-md: 24px)
 
-- [ ] Task 4: Format dateTime for human-readable display (AC: #4)
-  - [ ] Create a utility function (in `event-item.tsx` or a shared `lib/format.ts`)
-  - [ ] Input: ISO 8601 datetime string from Sanity
-  - [ ] Output: "Monday, July 7 at 7:00 PM" format
-  - [ ] Use `Intl.DateTimeFormat` with options: `{ weekday: 'long', month: 'long', day: 'numeric' }` for date, `{ hour: 'numeric', minute: '2-digit' }` for time
-  - [ ] Locale: `'en-US'`
-  - [ ] Handle edge cases: midnight events, all-day events (if dateTime has no time component)
+- [x] Task 4: Format dateTime for human-readable display (AC: #4)
+  - [x] Create a utility function (in `event-item.tsx` or a shared `lib/format.ts`)
+  - [x] Input: ISO 8601 datetime string from Sanity
+  - [x] Output: "Monday, July 7 at 7:00 PM" format
+  - [x] Use `Intl.DateTimeFormat` with options: `{ weekday: 'long', month: 'long', day: 'numeric' }` for date, `{ hour: 'numeric', minute: '2-digit' }` for time
+  - [x] Locale: `'en-US'`
+  - [x] Handle edge cases: midnight events, all-day events (if dateTime has no time component)
 
-- [ ] Task 5: Add events section to `/connect` page (AC: #1, #5, #6, #7, #8)
-  - [ ] Import `upcomingEventsQuery` from `lib/sanity/queries.ts`
-  - [ ] Import Sanity client from `lib/sanity/client.ts`
-  - [ ] Fetch events in the RSC (Server Component) — NEVER client-side (AD-3)
-  - [ ] Wrap GROQ fetch in try/catch — on error, return empty array (AD-12)
-  - [ ] Render events section below the app link cards section from Story 4.1
-  - [ ] Section structure: eyebrow ("UPCOMING EVENTS") → headline → event list
-  - [ ] Map over events array, render `EventItem` for each
-  - [ ] Empty state: when events array is empty, render "No upcoming events listed yet." in body / on-surface-muted
-  - [ ] `export const revalidate = 60` already present from Story 4.1
+- [x] Task 5: Add events section to `/connect` page (AC: #1, #5, #6, #7, #8)
+  - [x] Import `upcomingEventsQuery` from `lib/sanity/queries.ts`
+  - [x] Import Sanity client from `lib/sanity/client.ts`
+  - [x] Fetch events in the RSC (Server Component) — NEVER client-side (AD-3)
+  - [x] Wrap GROQ fetch in try/catch — on error, return empty array (AD-12)
+  - [x] Render events section below the app link cards section from Story 4.1
+  - [x] Section structure: eyebrow ("UPCOMING EVENTS") → headline → event list
+  - [x] Map over events array, render `EventItem` for each
+  - [x] Empty state: when events array is empty, render "No upcoming events listed yet." in body / on-surface-muted
+  - [x] `export const revalidate = 60` already present from Story 4.1
 
-- [ ] Task 6: Ensure page semantic structure (AC: #1)
-  - [ ] Verify one `<h1>` for the page (already from Story 4.1)
-  - [ ] Events section heading is `<h2>` — "UPCOMING EVENTS"
-  - [ ] Verify heading hierarchy is not broken by adding this section
+- [x] Task 6: Ensure page semantic structure (AC: #1)
+  - [x] Verify one `<h1>` for the page (already from Story 4.1)
+  - [x] Events section heading is `<h2>` — "UPCOMING EVENTS"
+  - [x] Verify heading hierarchy is not broken by adding this section
+
+### Review Findings
+
+- [x] [Review][Patch] Event time formatting uses the deployment timezone instead of the authored Sanity time [`lib/format-event-date.ts:8`]
+- [x] [Review][Patch] Coming-soon app cards render inert `href="#"` anchors after click prevention was removed [`components/app-link-card.tsx:12`]
 
 ## Dev Notes
 
@@ -184,8 +193,42 @@ This story ADDS the events section below the app link cards. Do NOT recreate the
 
 ### Agent Model Used
 
+github-copilot/gpt-5.5
+
 ### Debug Log References
+
+- `python3 _bmad/scripts/resolve_customization.py --skill .agents/skills/bmad-dev-story --key workflow` failed because `python3` is unavailable; fallback customization loading was used.
+- `pnpm test` red phase failed for missing `lib/format-event-date.ts` and `lib/sanity/upcoming-events.ts` before implementation.
+- `pnpm test` passed: 38/38 tests.
+- `pnpm lint` passed with one unrelated warning in `.agents/skills/create-agent-with-sanity-context/references/ecommerce/app/src/app/api/chat/route.ts`.
+- `pnpm build` passed.
 
 ### Completion Notes List
 
+- Verified existing `wardEvent` schema fields, required validations, plain-language labels, and schema registration.
+- Verified existing `upcomingEventsQuery` filters by upcoming `wardEvent` documents, orders ascending, limits to 20, and projects required fields.
+- Added `EventItem` with light list-item styling, accent-rust left border, formatted date line, optional description, and optional location.
+- Added `formatEventDateTime` with `Intl.DateTimeFormat` coverage for ISO datetimes, midnight events, and date-only all-day values.
+- Added server-side `fetchUpcomingEvents` helper that returns an empty list when Sanity fetching fails.
+- Updated `/connect` as an async RSC to fetch upcoming events with the named query and singleton client, preserving `revalidate = 60`.
+- Added events section below app link cards with empty state and semantic heading hierarchy.
+- Added/updated tests for date formatting, fetch failure fallback, connect page event section placement, and page source constraints.
+
 ### File List
+
+- sanity/schema-types/ward-event.ts
+- sanity/schema-types/index.ts
+- lib/sanity/queries.ts
+- app/(site)/connect/page.tsx
+- app/(site)/connect/page.test.mjs
+- components/event-item.tsx
+- lib/format-event-date.ts
+- lib/sanity/upcoming-events.ts
+- tests/event-date-format.test.mjs
+- tests/upcoming-events.test.mjs
+- _bmad-output/implementation-artifacts/4-2-ward-events-calendar.md
+- _bmad-output/implementation-artifacts/sprint-status.yaml
+
+### Change Log
+
+- 2026-07-02: Implemented ward events calendar on `/connect`, added event item/date formatting/fetch fallback tests, and moved story to review.

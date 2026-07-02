@@ -1,5 +1,3 @@
-"use client";
-
 import type React from "react";
 
 type AppLinkCardProps = {
@@ -10,17 +8,8 @@ type AppLinkCardProps = {
 };
 
 export function AppLinkCard({ name, href, icon, comingSoon = false }: AppLinkCardProps) {
-  return (
-    <a
-      href={comingSoon ? "#" : href}
-      aria-label={`Open ${name}`}
-      target={comingSoon ? undefined : "_blank"}
-      rel={comingSoon ? undefined : "noopener noreferrer"}
-      onClick={comingSoon ? (event) => event.preventDefault() : undefined}
-      className={`group relative flex min-h-11 flex-col justify-between bg-primary px-6 py-5 text-on-primary transition-colors focus-visible:ring-2 focus-visible:ring-accent-teal focus-visible:ring-offset-2 focus-visible:ring-offset-surface-warm ${
-        comingSoon ? "pointer-events-none opacity-60" : "hover:bg-[#0d4549]"
-      }`}
-    >
+  const content = (
+    <>
       <span className="flex items-start justify-between gap-4">
         <span className="text-section-label tracking-[0.14em] text-on-primary">{name}</span>
         {comingSoon ? (
@@ -33,6 +22,30 @@ export function AppLinkCard({ name, href, icon, comingSoon = false }: AppLinkCar
         {icon}
       </span>
       {!comingSoon ? <span className="sr-only">(opens in new tab)</span> : null}
+    </>
+  );
+
+  if (comingSoon) {
+    return (
+      <div
+        aria-label={`${name} coming soon`}
+        aria-disabled="true"
+        className="group relative flex min-h-11 flex-col justify-between bg-primary px-6 py-5 text-on-primary opacity-60"
+      >
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      aria-label={`Open ${name}`}
+      target={comingSoon ? undefined : "_blank"}
+      rel={comingSoon ? undefined : "noopener noreferrer"}
+      className="group relative flex min-h-11 flex-col justify-between bg-primary px-6 py-5 text-on-primary transition-colors hover:bg-[#0d4549] focus-visible:ring-2 focus-visible:ring-accent-teal focus-visible:ring-offset-2 focus-visible:ring-offset-surface-warm"
+    >
+      {content}
     </a>
   );
 }

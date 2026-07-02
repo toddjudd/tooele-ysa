@@ -14,7 +14,24 @@ test("connect page is ISR and exposes the required page shell", () => {
   assert.match(source, /text-headline-mobile md:text-headline/);
   assert.match(source, /py-section-v-mobile/);
   assert.match(source, /lg:py-section-v/);
-  assert.doesNotMatch(source, /groq|client\.fetch|@\/lib\/sanity/i);
+  assert.match(source, /@\/lib\/sanity\/client/);
+  assert.match(source, /@\/lib\/sanity\/queries/);
+  assert.match(source, /@\/lib\/sanity\/upcoming-events/);
+  assert.match(source, /fetchUpcomingEvents\(client, upcomingEventsQuery\)/);
+  assert.doesNotMatch(source, /client\.fetch|defineQuery|groq/i);
+});
+
+test("connect page renders the events section below app links", () => {
+  const appLinksIndex = source.indexOf("link-tree-heading");
+  const eventsIndex = source.indexOf("events-heading");
+
+  assert.ok(eventsIndex > appLinksIndex, "events section should render after app links");
+  assert.match(source, />UPCOMING EVENTS</);
+  assert.match(source, /<h2 id="events-heading"/);
+  assert.match(source, /<EventItem/);
+  assert.match(source, /events\.map/);
+  assert.match(source, /No upcoming events listed yet\./);
+  assert.match(source, /text-body text-on-surface-muted/);
 });
 
 test("connect page renders active LDS app links and coming-soon social cards", () => {
