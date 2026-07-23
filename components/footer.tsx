@@ -19,6 +19,12 @@ export function Footer() {
               {link.label}
             </Link>
           ))}
+          <a
+            href="mailto:ysawardtooele@gmail.com?subject=Website%20Feedback"
+            className="flex min-h-11 items-center text-section-label tracking-[0.14em] text-white/65 transition-colors hover:text-accent-teal focus-visible:ring-2 focus-visible:ring-accent-teal focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+          >
+            FEEDBACK
+          </a>
         </nav>
         <p className="text-body-sm text-white/65">© {currentYear} Tooele YSA Ward</p>
         <p className="max-w-3xl text-body-sm text-white/45">
