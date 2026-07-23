@@ -74,6 +74,29 @@ export const weeklyActivitiesQuery = defineQuery(/* groq */ `
   }
 `);
 
+export const sacramentProgramQuery = defineQuery(/* groq */ `
+  *[_type == "sacramentProgram"] | order(meetingDate desc)[0]{
+    _id,
+    meetingDate,
+    presiding,
+    conducting,
+    chorister,
+    organist,
+    program[]{
+      _key,
+      _type,
+      label,
+      number,
+      title,
+      type,
+      person,
+      name,
+      topic,
+      performer
+    }
+  }
+`);
+
 export const upcomingEventsQuery = defineQuery(/* groq */ `
   *[_type == "wardEvent" && dateTime >= now()] | order(dateTime asc)[0...20]{
     _id,

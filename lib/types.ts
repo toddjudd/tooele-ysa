@@ -85,6 +85,46 @@ export type WardEvent = {
   location?: string;
 };
 
+export type SacramentProgram = {
+  _id: string;
+  _type: "sacramentProgram";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  meetingDate: string;
+  presiding?: string;
+  conducting?: string;
+  chorister?: string;
+  organist?: string;
+  program?: Array<
+    | {
+        label?: string;
+        number?: string;
+        title: string;
+        _type: "programHymn";
+        _key: string;
+      }
+    | {
+        type: "Opening Prayer" | "Closing Prayer";
+        person: string;
+        _type: "programPrayer";
+        _key: string;
+      }
+    | {
+        name: string;
+        topic?: string;
+        _type: "programSpeaker";
+        _key: string;
+      }
+    | {
+        title: string;
+        performer?: string;
+        _type: "programMusicalNumber";
+        _key: string;
+      }
+  >;
+};
+
 export type LeaderCard = {
   _id: string;
   _type: "leaderCard";
@@ -273,6 +313,7 @@ export type AllSanitySchemaTypes =
   | SanityImageCrop
   | SanityImageHotspot
   | WardEvent
+  | SacramentProgram
   | LeaderCard
   | HomeSectionBottom
   | HomeSectionTop
@@ -450,6 +491,68 @@ export type WeeklyActivitiesQueryResult = Array<{
     } | null;
   }> | null;
 }>;
+
+// Source: lib/sanity/queries.ts
+// Variable: sacramentProgramQuery
+// Query: *[_type == "sacramentProgram"] | order(meetingDate desc)[0]{    _id,    meetingDate,    presiding,    conducting,    chorister,    organist,    program[]{      _key,      _type,      label,      number,      title,      type,      person,      name,      topic,      performer    }  }
+export type SacramentProgramQueryResult = {
+  _id: string;
+  meetingDate: string;
+  presiding: string | null;
+  conducting: string | null;
+  chorister: string | null;
+  organist: string | null;
+  program: Array<
+    | {
+        _key: string;
+        _type: "programHymn";
+        label: string | null;
+        number: string | null;
+        title: string;
+        type: null;
+        person: null;
+        name: null;
+        topic: null;
+        performer: null;
+      }
+    | {
+        _key: string;
+        _type: "programMusicalNumber";
+        label: null;
+        number: null;
+        title: string;
+        type: null;
+        person: null;
+        name: null;
+        topic: null;
+        performer: string | null;
+      }
+    | {
+        _key: string;
+        _type: "programPrayer";
+        label: null;
+        number: null;
+        title: null;
+        type: "Closing Prayer" | "Opening Prayer";
+        person: string;
+        name: null;
+        topic: null;
+        performer: null;
+      }
+    | {
+        _key: string;
+        _type: "programSpeaker";
+        label: null;
+        number: null;
+        title: null;
+        type: null;
+        person: null;
+        name: string;
+        topic: string | null;
+        performer: null;
+      }
+  > | null;
+} | null;
 
 // Source: lib/sanity/queries.ts
 // Variable: upcomingEventsQuery

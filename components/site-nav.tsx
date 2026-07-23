@@ -9,6 +9,8 @@ import { isActiveSiteLink, siteLinks } from "@/lib/site-links";
 const navLinkClassName =
   "flex min-h-11 items-center px-3 text-section-label tracking-[0.14em] text-white transition-colors focus-visible:ring-2 focus-visible:ring-accent-teal focus-visible:ring-offset-2 focus-visible:ring-offset-primary";
 
+const navLinks = siteLinks.filter((link) => link.href !== "/");
+
 export function SiteNav() {
   const pathname = usePathname();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -82,7 +84,7 @@ export function SiteNav() {
         </Link>
 
         <div className="hidden items-center gap-2 md:flex">
-          {siteLinks.map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -136,7 +138,7 @@ export function SiteNav() {
             </span>
           </button>
           <div className="mt-4 grid gap-2">
-            {siteLinks.map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
