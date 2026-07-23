@@ -32,9 +32,10 @@ export function Footer() {
           © {currentYear} Tooele YSA Ward
         </p>
         <p className='text-body-sm text-white/45'>
-          This website is not an official website of The Church of Jesus Christ
-          of Latter-day Saints, nor is it sponsored by the Church. It follows
-          the guidelines in the Church handbook, section 38.8.21.
+          <b>Disclaimer:</b> This website is not an official website of The
+          Church of Jesus Christ of Latter-day Saints, nor is it sponsored by
+          the Church. It follows the guidelines in the Church handbook, section
+          38.8.21.
         </p>
       </div>
     </footer>
