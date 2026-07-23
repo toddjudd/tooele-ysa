@@ -35,11 +35,11 @@ test("LeaderCard component matches the required card and contact-link contract",
   assert.doesNotMatch(component, /rounded/);
 });
 
-test("About page fetches leader cards through ISR and renders accessible directory states", () => {
-  const page = read("app/(site)/about/page.tsx");
+test("Contacts page fetches leader cards through ISR and renders accessible directory states", () => {
+  const page = read("app/(site)/contacts/page.tsx");
 
   assert.match(page, /export const revalidate = 60/);
-  assert.match(page, /title:\s*"About Us — Tooele YSA Ward"/);
+  assert.match(page, /title:\s*"Contacts — Tooele YSA Ward"/);
   assert.match(page, /from "@\/components\/leader-card"/);
   assert.match(page, /leaderCardsQuery/);
   assert.match(page, /LeaderCardsQueryResult/);
@@ -50,9 +50,9 @@ test("About page fetches leader cards through ISR and renders accessible directo
   assert.match(page, /try\s*{/);
   assert.match(page, /catch\s*{/);
   assert.match(page, /return \[\]/);
-  assert.match(page, /<h1 id="about-heading"/);
+  assert.match(page, /<h1 id="contacts-heading"/);
   assert.match(page, /<h2 id="leadership-heading"/);
-  assert.match(page, /ABOUT US/);
+  assert.match(page, /CONTACTS/);
   assert.match(page, /OUR LEADERSHIP/);
   assert.match(page, /grid grid-cols-1 gap-stack-md sm:grid-cols-2 lg:grid-cols-3/);
   assert.match(page, /Leadership information will be added soon\./);

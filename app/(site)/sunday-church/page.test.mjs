@@ -4,8 +4,8 @@ import { test } from "node:test";
 
 const source = readFileSync(new URL("./page.tsx", import.meta.url), "utf8");
 
-test("gatherings page is static and renders required visitor information", () => {
-  assert.match(source, /title:\s*["']Gatherings — Tooele YSA Ward["']/);
+test("sunday church page is static and renders required visitor information", () => {
+  assert.match(source, /title:\s*["']Sunday Church — Tooele YSA Ward["']/);
   assert.doesNotMatch(source, /export\s+const\s+revalidate/);
   assert.doesNotMatch(source, /groq|sanity|client\.fetch/i);
   assert.match(source, /Sundays, 11:00 AM – 1:00 PM/);
@@ -20,10 +20,10 @@ test("gatherings page is static and renders required visitor information", () =>
   assert.match(source, /Floor plan of the Tooele chapel showing room locations/);
 });
 
-test("gatherings page preserves semantic heading and section-band structure", () => {
+test("sunday church page preserves semantic heading and section-band structure", () => {
   assert.equal((source.match(/<h1\b/g) ?? []).length, 1);
   assert.equal((source.match(/<h2\b/g) ?? []).length, 2);
-  assert.match(source, />GATHERINGS</);
+  assert.match(source, />SUNDAY CHURCH</);
   assert.match(source, />BUILDING GUIDE</);
   assert.match(source, />FIRST TIME\?</);
   assert.match(source, /text-headline-mobile md:text-headline/);
@@ -31,7 +31,7 @@ test("gatherings page preserves semantic heading and section-band structure", ()
   assert.match(source, /lg:py-section-v/);
 });
 
-test("gatherings page includes building and first-time attendance guidance", () => {
+test("sunday church page includes building and first-time attendance guidance", () => {
   assert.match(source, /Floor plan image coming soon/);
   assert.match(source, /Relief Society/);
   assert.match(source, /Elders quorum/);

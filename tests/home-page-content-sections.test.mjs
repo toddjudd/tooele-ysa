@@ -14,10 +14,14 @@ test("HomeContentSection renders reusable Sanity-backed image and empty states",
 
   assert.match(section, /from "@\/components\/sanity-image"/);
   assert.match(section, /type HomeContentSectionProps/);
-  assert.match(section, /backgroundImage\?/);
+  assert.match(section, /desktopImage\?/);
+  assert.match(section, /mobileImage\?/);
   assert.match(section, /eyebrow\?/);
   assert.match(section, /heading\?/);
   assert.match(section, /body\?/);
+  assert.match(section, /const imageOnly/);
+  assert.match(section, /md:hidden/);
+  assert.match(section, /hidden h-auto w-full md:block/);
   assert.match(section, /bg-surface-warm/);
   assert.match(section, /bg-primary\/45/);
   assert.match(section, /text-section-label/);
@@ -48,7 +52,7 @@ test("Home page fetches both content sections independently and renders join us 
   assert.match(page, /<Hero heroImage=\{heroImage\} \/>/);
   assert.match(page, /<HomeContentSection/);
   assert.match(page, /Sundays, 11:00 AM – 1:00 PM/);
-  assert.match(page, /href="\/gatherings"/);
+  assert.match(page, /href="\/sunday-church"/);
   assert.match(page, /https:\/\/maps\.app\.goo\.gl\/s6kaRrALfUj1PGRU7/);
   assert.match(page, /target="_blank"/);
   assert.match(page, /rel="noopener noreferrer"/);

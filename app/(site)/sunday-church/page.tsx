@@ -4,7 +4,7 @@ import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 export const metadata: Metadata = {
-  title: "Gatherings — Tooele YSA Ward",
+  title: "Sunday Church — Tooele YSA Ward",
 };
 
 const directionsUrl = "https://maps.app.goo.gl/s6kaRrALfUj1PGRU7";
@@ -22,16 +22,16 @@ function getFloorPlanSrc() {
   return floorPlanFile ? `/images/${floorPlanFile}` : null;
 }
 
-export default function GatheringsPage() {
+export default function SundayChurchPage() {
   const floorPlanSrc = getFloorPlanSrc();
 
   return (
     <>
-      <section aria-labelledby="gatherings-heading" className="bg-surface text-on-surface">
+      <section aria-labelledby="sunday-church-heading" className="bg-surface text-on-surface">
         <div className="mx-auto w-full max-w-container-max px-container-px py-section-v-mobile lg:px-container-px-lg lg:py-section-v">
           <div className="max-w-3xl">
-            <p className="text-section-label tracking-[0.14em] text-on-surface-muted">GATHERINGS</p>
-            <h1 id="gatherings-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
+            <p className="text-section-label tracking-[0.14em] text-on-surface-muted">SUNDAY CHURCH</p>
+            <h1 id="sunday-church-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
               Gather With Us on Sundays
             </h1>
             <p className="mt-stack-md text-body-lg text-on-surface-muted">

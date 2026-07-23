@@ -72,7 +72,8 @@ export default async function HomePage() {
       <Hero heroImage={heroImage} />
       <HomeContentSection
         ariaLabel="Welcome message"
-        backgroundImage={topSection?.backgroundImage}
+        desktopImage={topSection?.desktopImage}
+        mobileImage={topSection?.mobileImage}
         eyebrow={topSection?.eyebrow}
         heading={topSection?.heading}
         body={topSection?.body}
@@ -82,7 +83,8 @@ export default async function HomePage() {
       />
       <HomeContentSection
         ariaLabel="Ward life"
-        backgroundImage={bottomSection?.backgroundImage}
+        desktopImage={bottomSection?.desktopImage}
+        mobileImage={bottomSection?.mobileImage}
         eyebrow={bottomSection?.eyebrow}
         heading={bottomSection?.heading}
         body={bottomSection?.body}
@@ -100,10 +102,10 @@ export default async function HomePage() {
             </p>
             <div className="mt-stack-lg flex flex-col gap-4 sm:flex-row">
               <Link
-                href="/gatherings"
+                href="/sunday-church"
                 className="flex min-h-11 items-center justify-center bg-accent-rust px-8 py-3.5 text-center text-cta tracking-[0.1em] text-on-accent-rust transition-colors hover:bg-[#8f3f23] focus-visible:ring-2 focus-visible:ring-accent-teal focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
               >
-                View Gatherings
+                View Sunday Church
               </Link>
               <a
                 href={directionsUrl}

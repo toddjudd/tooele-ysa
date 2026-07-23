@@ -2,15 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 import { AppLinkCard } from "@/components/app-link-card";
-import { EventItem } from "@/components/event-item";
-import { client } from "@/lib/sanity/client";
-import { upcomingEventsQuery } from "@/lib/sanity/queries";
-import { fetchUpcomingEvents } from "@/lib/sanity/upcoming-events";
-
-export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Let's Connect — Tooele YSA Ward",
+  title: "Links — Tooele YSA Ward",
 };
 
 const appLinks = [
@@ -53,16 +47,14 @@ function AppIcon({ iconSrc }: { iconSrc: string }) {
   return <Image src={iconSrc} alt="" width={40} height={40} className="h-10 w-10" aria-hidden="true" />;
 }
 
-export default async function ConnectPage() {
-  const events = await fetchUpcomingEvents(client, upcomingEventsQuery);
-
+export default function LinksPage() {
   return (
     <>
-      <section aria-labelledby="connect-heading" className="bg-surface text-on-surface">
+      <section aria-labelledby="links-heading" className="bg-surface text-on-surface">
         <div className="mx-auto w-full max-w-container-max px-container-px py-section-v-mobile lg:px-container-px-lg lg:py-section-v">
           <div className="max-w-3xl">
-            <p className="text-section-label tracking-[0.14em] text-on-surface-muted">LET&apos;S CONNECT</p>
-            <h1 id="connect-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
+            <p className="text-section-label tracking-[0.14em] text-on-surface-muted">LINKS</p>
+            <h1 id="links-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
               Tools and Accounts for Tooele YSA
             </h1>
             <p className="mt-stack-md text-body-lg text-on-surface-muted">
@@ -101,32 +93,6 @@ export default async function ConnectPage() {
                 comingSoon={true}
               />
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="events-heading" className="bg-surface text-on-surface">
-        <div className="mx-auto w-full max-w-container-max px-container-px py-section-v-mobile lg:px-container-px-lg lg:py-section-v">
-          <div className="max-w-3xl">
-            <p className="text-section-label tracking-[0.14em] text-accent-rust">UPCOMING EVENTS</p>
-            <h2 id="events-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
-              Upcoming Events
-            </h2>
-            {events.length > 0 ? (
-              <div className="mt-stack-lg space-y-stack-md">
-                {events.map((event) => (
-                  <EventItem
-                    key={event._id}
-                    title={event.title}
-                    dateTime={event.dateTime}
-                    description={event.description}
-                    location={event.location}
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="mt-stack-md text-body text-on-surface-muted">No upcoming events listed yet.</p>
-            )}
           </div>
         </div>
       </section>

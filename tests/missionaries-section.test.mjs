@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { test } from "node:test";
 
 const componentSource = readFileSync(new URL("../components/missionaries-block.tsx", import.meta.url), "utf8");
-const pageSource = readFileSync(new URL("../app/(site)/about/page.tsx", import.meta.url), "utf8");
+const pageSource = readFileSync(new URL("../app/(site)/contacts/page.tsx", import.meta.url), "utf8");
 
 test("MissionariesBlock is static and exposes the required contact actions", () => {
   assert.match(componentSource, /export function MissionariesBlock\(/);
@@ -35,9 +35,9 @@ test("MissionariesBlock keeps required styling and accessibility guardrails", ()
   assert.doesNotMatch(componentSource, /Elder|Sister|President\s+[A-Z]/);
 });
 
-test("About page assembles identity, leadership, and missionaries in order", () => {
+test("Contacts page assembles identity, leadership, and missionaries in order", () => {
   assert.match(pageSource, /export const revalidate = 60/);
-  assert.match(pageSource, /title:\s*"About Us — Tooele YSA Ward"/);
+  assert.match(pageSource, /title:\s*"Contacts — Tooele YSA Ward"/);
   assert.match(pageSource, /import \{ MissionariesBlock \}/);
 
   const h1Index = pageSource.indexOf("<h1");

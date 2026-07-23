@@ -1,8 +1,10 @@
 export const siteLinks = [
   { label: "Home", href: "/" },
-  { label: "Gatherings", href: "/gatherings" },
-  { label: "About Us", href: "/about" },
-  { label: "Let's Connect", href: "/connect" },
+  { label: "Sunday Church", href: "/sunday-church" },
+  { label: "Weekly Activities", href: "/weekly-activities" },
+  { label: "Calendar", href: "/calendar" },
+  { label: "Contacts", href: "/contacts" },
+  { label: "Links", href: "/links" },
 ] as const;
 
 export function isActiveSiteLink(pathname: string, href: string) {

@@ -8,7 +8,7 @@ import type { LeaderCardsQueryResult } from "@/lib/types";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "About Us — Tooele YSA Ward",
+  title: "Contacts — Tooele YSA Ward",
 };
 
 function hasSanityEnv() {
@@ -29,21 +29,21 @@ async function getLeaderCards(): Promise<LeaderCardsQueryResult> {
   }
 }
 
-export default async function AboutPage() {
+export default async function ContactsPage() {
   const leaderCards = await getLeaderCards();
 
   return (
     <>
-      <section aria-labelledby="about-heading" className="bg-surface text-on-surface">
+      <section aria-labelledby="contacts-heading" className="bg-surface text-on-surface">
         <div className="mx-auto w-full max-w-container-max px-container-px py-section-v-mobile lg:px-container-px-lg lg:py-section-v">
           <div className="max-w-3xl">
-            <p className="text-section-label tracking-[0.14em] text-on-surface-muted">ABOUT US</p>
-            <h1 id="about-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
-              A Ward for Young Single Adults in Tooele
+            <p className="text-section-label tracking-[0.14em] text-on-surface-muted">CONTACTS</p>
+            <h1 id="contacts-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
+              Reach Out to the Tooele YSA Ward
             </h1>
             <p className="mt-stack-md text-body-lg text-on-surface-muted">
-              Tooele YSA Ward is a place to worship Jesus Christ, build lasting friendships, and serve together. This
-              page will continue to grow with more details about our ward and the people who help members feel welcome.
+              Whether you have a question, need a ride, or want to know where to go next, our ward leaders and
+              missionaries are here to help. Find the right person to contact below.
             </p>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default async function AboutPage() {
       <section aria-labelledby="leadership-heading" className="bg-surface-warm text-on-surface">
         <div className="mx-auto w-full max-w-container-max px-container-px py-section-v-mobile lg:px-container-px-lg lg:py-section-v">
           <div className="max-w-3xl">
-            <p className="text-section-label tracking-[0.14em] text-on-surface-muted">ABOUT US</p>
+            <p className="text-section-label tracking-[0.14em] text-on-surface-muted">CONTACTS</p>
             <h2 id="leadership-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
               OUR LEADERSHIP
             </h2>
