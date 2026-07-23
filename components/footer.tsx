@@ -21,7 +21,7 @@ export function Footer() {
           ))}
         </nav>
         <p className="text-body-sm text-white/65">© {currentYear} Tooele YSA Ward</p>
-        <p className="max-w-prose text-body-sm text-white/45">
+        <p className="max-w-3xl text-body-sm text-white/45">
           This website is not an official website of The Church of Jesus Christ
           of Latter-day Saints, nor is it sponsored by the Church. It follows the
           guidelines in the Church handbook, section 38.8.21.
