@@ -79,10 +79,13 @@ export type WardEvent = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  status: "pending" | "approved" | "rejected";
   title: string;
   dateTime: string;
   description?: string;
   location?: string;
+  submitterName?: string;
+  submitterEmail?: string;
 };
 
 export type SacramentProgram = {
@@ -556,7 +559,7 @@ export type SacramentProgramQueryResult = {
 
 // Source: lib/sanity/queries.ts
 // Variable: upcomingEventsQuery
-// Query: *[_type == "wardEvent" && dateTime >= now()] | order(dateTime asc)[0...20]{    _id,    title,    dateTime,    description,    location  }
+// Query: *[_type == "wardEvent" && status == "approved" && dateTime >= now()] | order(dateTime asc)[0...20]{    _id,    title,    dateTime,    description,    location  }
 export type UpcomingEventsQueryResult = Array<{
   _id: string;
   title: string;

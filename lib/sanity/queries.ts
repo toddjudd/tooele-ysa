@@ -98,7 +98,7 @@ export const sacramentProgramQuery = defineQuery(/* groq */ `
 `);
 
 export const upcomingEventsQuery = defineQuery(/* groq */ `
-  *[_type == "wardEvent" && dateTime >= now()] | order(dateTime asc)[0...20]{
+  *[_type == "wardEvent" && status == "approved" && dateTime >= now()] | order(dateTime asc)[0...20]{
     _id,
     title,
     dateTime,

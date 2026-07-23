@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { EventItem } from "@/components/event-item";
+import { EventSubmissionForm } from "@/components/event-submission-form";
 import { client } from "@/lib/sanity/client";
 import { upcomingEventsQuery } from "@/lib/sanity/queries";
 import { fetchUpcomingEvents } from "@/lib/sanity/upcoming-events";
@@ -53,6 +54,21 @@ export default async function CalendarPage() {
             ) : (
               <p className="mt-stack-md text-body text-on-surface-muted">No upcoming events listed yet.</p>
             )}
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="submit-event-heading" className="bg-surface text-on-surface">
+        <div className="mx-auto w-full max-w-container-max px-container-px py-section-v-mobile lg:px-container-px-lg lg:py-section-v">
+          <div className="max-w-3xl">
+            <p className="text-section-label tracking-[0.14em] text-accent-rust">SUBMIT AN EVENT</p>
+            <h2 id="submit-event-heading" className="mt-stack-sm text-headline-mobile md:text-headline">
+              Have an event to share?
+            </h2>
+            <p className="mt-stack-md text-body-lg text-on-surface-muted">
+              Submit your event below. A ward leader will review it before it appears on the calendar.
+            </p>
+            <EventSubmissionForm />
           </div>
         </div>
       </section>
