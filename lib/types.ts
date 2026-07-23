@@ -53,16 +53,23 @@ export type HomeSectionBottom = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  backgroundImage: {
+  desktopImage: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
-  eyebrow: string;
-  heading: string;
-  body: string;
+  mobileImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
 };
 
 export type SanityImageCrop = {
@@ -87,16 +94,23 @@ export type HomeSectionTop = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  backgroundImage: {
+  desktopImage: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
-  eyebrow: string;
-  heading: string;
-  body: string;
+  mobileImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
 };
 
 export type HeroImage = {
@@ -262,13 +276,28 @@ export type HeroImageQueryResult = {
 
 // Source: lib/sanity/queries.ts
 // Variable: homeSectionTopQuery
-// Query: *[_type == "homeSectionTop"][0]{    _id,    eyebrow,    heading,    body,    backgroundImage {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  crop,  hotspot }  }
+// Query: *[_type == "homeSectionTop"][0]{    _id,    eyebrow,    heading,    body,    desktopImage {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  crop,  hotspot },    mobileImage {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  crop,  hotspot }  }
 export type HomeSectionTopQueryResult = {
   _id: string;
-  eyebrow: string;
-  heading: string;
-  body: string;
-  backgroundImage: {
+  eyebrow: string | null;
+  heading: string | null;
+  body: string | null;
+  desktopImage: {
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+        } | null;
+      } | null;
+    } | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+  };
+  mobileImage: {
     asset: {
       _id: string;
       url: string;
@@ -287,13 +316,28 @@ export type HomeSectionTopQueryResult = {
 
 // Source: lib/sanity/queries.ts
 // Variable: homeSectionBottomQuery
-// Query: *[_type == "homeSectionBottom"][0]{    _id,    eyebrow,    heading,    body,    backgroundImage {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  crop,  hotspot }  }
+// Query: *[_type == "homeSectionBottom"][0]{    _id,    eyebrow,    heading,    body,    desktopImage {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  crop,  hotspot },    mobileImage {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  crop,  hotspot }  }
 export type HomeSectionBottomQueryResult = {
   _id: string;
-  eyebrow: string;
-  heading: string;
-  body: string;
-  backgroundImage: {
+  eyebrow: string | null;
+  heading: string | null;
+  body: string | null;
+  desktopImage: {
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+        } | null;
+      } | null;
+    } | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+  };
+  mobileImage: {
     asset: {
       _id: string;
       url: string;

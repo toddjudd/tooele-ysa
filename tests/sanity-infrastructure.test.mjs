@@ -111,7 +111,8 @@ test("Sanity schema types match the CMS content contract", () => {
   assert.match(hero, /title:\s*"Hero Image"/);
 
   [top, bottom].forEach((source) => {
-    assert.match(source, /title:\s*"Background Image"/);
+    assert.match(source, /title:\s*"Desktop Background Image"/);
+    assert.match(source, /title:\s*"Mobile Background Image"/);
     assert.match(source, /title:\s*"Eyebrow Text"/);
     assert.match(source, /title:\s*"Section Heading"/);
     assert.match(source, /title:\s*"Body Text"/);

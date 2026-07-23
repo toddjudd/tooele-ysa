@@ -27,7 +27,8 @@ export const homeSectionTopQuery = defineQuery(/* groq */ `
     eyebrow,
     heading,
     body,
-    backgroundImage { ${imageFields} }
+    desktopImage { ${imageFields} },
+    mobileImage { ${imageFields} }
   }
 `);
 
@@ -37,7 +38,8 @@ export const homeSectionBottomQuery = defineQuery(/* groq */ `
     eyebrow,
     heading,
     body,
-    backgroundImage { ${imageFields} }
+    desktopImage { ${imageFields} },
+    mobileImage { ${imageFields} }
   }
 `);
 
