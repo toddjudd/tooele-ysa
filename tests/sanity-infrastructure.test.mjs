@@ -76,7 +76,7 @@ test("Sanity client, image builder, and queries are centralized", () => {
     "leaderCardsQuery",
     "upcomingEventsQuery",
   ].forEach((queryName) => assert.match(queries, new RegExp(`export const ${queryName}`)));
-  assert.match(queries, /dateTime\s*>=\s*now\(\)/);
+  assert.match(queries, /dateTime\s*>=\s*\$cutoff/);
   assert.match(queries, /order\(displayOrder asc\)/);
   assert.match(queries, /order\(dateTime asc\)\[0\.\.\.20\]/);
 

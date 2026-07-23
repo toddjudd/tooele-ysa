@@ -29,6 +29,18 @@ export function EventSubmissionForm() {
 
   return (
     <form action={action} className="mt-stack-lg max-w-xl space-y-stack-md">
+      <div
+        role="note"
+        className="rounded-md border-l-[3px] border-accent-rust bg-surface-warm px-stack-md py-stack-sm"
+      >
+        <p className="text-body-sm font-medium text-on-surface">Please protect everyone&rsquo;s privacy</p>
+        <p className="mt-stack-xs text-body-sm text-on-surface-muted">
+          This is a public website that anyone on the internet can view. Do not include private
+          information such as an individual&rsquo;s home address or phone number. Share personal
+          details only with extreme caution.
+        </p>
+      </div>
+
       <div>
         <label htmlFor="event-title" className={labelClass}>
           Event title <span className="text-accent-rust">*</span>
@@ -54,6 +66,9 @@ export function EventSubmissionForm() {
           Location
         </label>
         <input id="event-location" name="location" type="text" className={inputClass} />
+        <p className="mt-stack-xs text-body-sm text-on-surface-muted">
+          Use a public venue or general location. Avoid posting a personal home address.
+        </p>
       </div>
 
       <div>

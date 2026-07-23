@@ -96,6 +96,7 @@ test("environment example and gitignore expose only the required env contract", 
     read(".env.example").trim(),
     [
       "SANITY_API_READ_TOKEN=",
+      "SANITY_API_WRITE_TOKEN=",
       "NEXT_PUBLIC_SANITY_PROJECT_ID=",
       "NEXT_PUBLIC_SANITY_DATASET=",
       "NEXT_PUBLIC_SANITY_STUDIO_URL=",
