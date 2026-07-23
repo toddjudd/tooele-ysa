@@ -54,6 +54,26 @@ export const leaderCardsQuery = defineQuery(/* groq */ `
   }
 `);
 
+export const weeklyActivitiesQuery = defineQuery(/* groq */ `
+  *[_type == "weeklyActivity"] | order(displayOrder asc){
+    _id,
+    title,
+    subtitle,
+    schedule,
+    body,
+    displayOrder,
+    image { ${imageFields} },
+    cards[]{
+      _key,
+      title,
+      body,
+      linkUrl,
+      linkText,
+      image { ${imageFields} }
+    }
+  }
+`);
+
 export const upcomingEventsQuery = defineQuery(/* groq */ `
   *[_type == "wardEvent" && dateTime >= now()] | order(dateTime asc)[0...20]{
     _id,

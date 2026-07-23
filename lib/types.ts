@@ -15,6 +15,64 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type WeeklyActivity = {
+  _id: string;
+  _type: "weeklyActivity";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  subtitle?: string;
+  schedule: string;
+  body: string;
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  displayOrder: number;
+  cards?: Array<{
+    title: string;
+    body: string;
+    linkUrl?: string;
+    linkText?: string;
+    image?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    _type: "activityCard";
+    _key: string;
+  }>;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
 export type WardEvent = {
   _id: string;
   _type: "wardEvent";
@@ -40,13 +98,6 @@ export type LeaderCard = {
   displayOrder: number;
 };
 
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-};
-
 export type HomeSectionBottom = {
   _id: string;
   _type: "homeSectionBottom";
@@ -70,22 +121,6 @@ export type HomeSectionBottom = {
   eyebrow?: string;
   heading?: string;
   body?: string;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
 };
 
 export type HomeSectionTop = {
@@ -233,12 +268,13 @@ export type Slug = {
 };
 
 export type AllSanitySchemaTypes =
-  | WardEvent
-  | LeaderCard
   | SanityImageAssetReference
-  | HomeSectionBottom
+  | WeeklyActivity
   | SanityImageCrop
   | SanityImageHotspot
+  | WardEvent
+  | LeaderCard
+  | HomeSectionBottom
   | HomeSectionTop
   | HeroImage
   | SanityImagePaletteSwatch
@@ -364,6 +400,55 @@ export type LeaderCardsQueryResult = Array<{
   phone: string | null;
   email: string | null;
   displayOrder: number;
+}>;
+
+// Source: lib/sanity/queries.ts
+// Variable: weeklyActivitiesQuery
+// Query: *[_type == "weeklyActivity"] | order(displayOrder asc){    _id,    title,    subtitle,    schedule,    body,    displayOrder,    image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  crop,  hotspot },    cards[]{      _key,      title,      body,      linkUrl,      linkText,      image {   asset->{    _id,    url,    metadata {      lqip,      dimensions { width, height }    }  },  crop,  hotspot }    }  }
+export type WeeklyActivitiesQueryResult = Array<{
+  _id: string;
+  title: string;
+  subtitle: string | null;
+  schedule: string;
+  body: string;
+  displayOrder: number;
+  image: {
+    asset: {
+      _id: string;
+      url: string;
+      metadata: {
+        lqip: string | null;
+        dimensions: {
+          width: number;
+          height: number;
+        } | null;
+      } | null;
+    } | null;
+    crop: SanityImageCrop | null;
+    hotspot: SanityImageHotspot | null;
+  } | null;
+  cards: Array<{
+    _key: string;
+    title: string;
+    body: string;
+    linkUrl: string | null;
+    linkText: string | null;
+    image: {
+      asset: {
+        _id: string;
+        url: string;
+        metadata: {
+          lqip: string | null;
+          dimensions: {
+            width: number;
+            height: number;
+          } | null;
+        } | null;
+      } | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+    } | null;
+  }> | null;
 }>;
 
 // Source: lib/sanity/queries.ts
