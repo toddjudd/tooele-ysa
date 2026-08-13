@@ -115,9 +115,9 @@ export default function LinksPage() {
               <AppLinkCard
                 key={link.name}
                 name={link.name}
-                href='#'
+                href={link.href}
                 icon={<AppIcon iconSrc={link.iconSrc} />}
-                comingSoon={true}
+                comingSoon={false}
               />
             ))}
           </div>
