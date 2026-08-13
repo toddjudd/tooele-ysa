@@ -308,33 +308,33 @@ export default async function SundayChurchPage() {
                 Classroom Assignments
               </h3>
               <ul className='mt-stack-sm space-y-stack-sm text-body text-on-surface-muted'>
-                <li>
+                <li className='whitespace-nowrap'>
                   <strong className='text-on-surface'>
                     Sacrament meeting:
                   </strong>{' '}
                   Chapel
                 </li>
-                <li>
+                <li className='whitespace-nowrap'>
                   <strong className='text-on-surface'>Gospel Doctrine:</strong>{' '}
                   Chapel
                 </li>
-                <li>
+                <li className='whitespace-nowrap'>
                   <strong className='text-on-surface'>
                     Gospel Principles:
                   </strong>{' '}
-                  Relief Society classroom
+                  Relief Society
                 </li>
-                <li>
+                <li className='whitespace-nowrap'>
                   <strong className='text-on-surface'>
                     Temple Preparation:
                   </strong>{' '}
-                  Primary classroom
+                  Primary
                 </li>
-                <li>
+                <li className='whitespace-nowrap'>
                   <strong className='text-on-surface'>Relief Society:</strong>{' '}
-                  Relief Society classroom
+                  Relief Society
                 </li>
-                <li>
+                <li className='whitespace-nowrap'>
                   <strong className='text-on-surface'>Elders quorum:</strong>{' '}
                   Chapel
                 </li>
