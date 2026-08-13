@@ -231,7 +231,7 @@ export default async function SundayChurchPage() {
                 alt={floorPlanAlt}
                 width={1100}
                 height={700}
-                className="h-auto w-full border-2 border-border bg-surface"
+                className="h-auto w-full border-2 border-border bg-white"
                 priority={false}
               />
             ) : (
