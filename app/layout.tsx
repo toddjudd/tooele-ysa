@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 
@@ -11,6 +11,13 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Tooele YSA",
   description: "Tooele YSA ward information and connection hub.",
+  appleWebApp: {
+    title: "Tooele YSA",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#af5031",
 };
 
 export default function RootLayout({
